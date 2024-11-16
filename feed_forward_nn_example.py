@@ -10,7 +10,7 @@ class Neuron:
         self.bias = bias
 
     def feedforward(self, inputs):
-        z = np.dot(self.weights, input) + self.bias
+        z = np.dot(self.weights, inputs) + self.bias
         return sigmoid(z)
     
 if __name__ == "__main__":
@@ -20,5 +20,5 @@ if __name__ == "__main__":
     n = Neuron(weights=weights, bias=bias)
 
 
-    x = np.array([0, 1])
+    x = np.array([2, 3])
     print(n.feedforward(x))
