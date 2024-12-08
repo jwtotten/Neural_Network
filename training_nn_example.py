@@ -43,4 +43,24 @@ class Neural_network:
         o1 = sigmoid(self.w5 * h1 + self.w6 * h2 + self.b3)
         return o1
     
-    
+    def train(self, data, all_y_trues):
+        """
+        Method to train the neural network.
+        :param data: [n,2] numpy array where n in the number of samples in the training data.
+        :param all_y_trues: numpy array which corresponds to the data in 'data'.
+        """
+        learning_rate = 0.1
+        epochs = 1000
+
+        for epoch in range(epochs):
+            for x, y_true in zip(data, all_y_trues):
+                sum_h1 = self.w1 * x[0] + self.w2 * x[1] + self.b1
+                h1 = sigmoid(sum_h1)
+
+                sum_h2 = self.w3 * x[0] + self.w4 * x[1] + self.b2
+                h2 = sigmoid(sum_h2)
+
+                sum_o1 = self.w5 * h1 + self.w6 * h2 + self.b3
+                o1 = sigmoid(sum_o1)
+                y_pred = o1
+                
