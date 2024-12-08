@@ -5,13 +5,23 @@ def sigmoid(x: float):
     return 1/(np.exp(-x)+1)
 
 def mse_loss(y_true, y_pred):
+    """
+    MSE - mean square error calculation
+    """
     return ((y_true - y_pred)**2).mean()
 
 def deriv_sigmoid(x):
-  fx = sigmoid(x)
-  return fx * (1 - fx)
+    """
+    Derivative of the sigmoid function.
+    """
+    fx = sigmoid(x)
+    return fx * (1 - fx)
 
 class Neural_network:
+    """
+    neural network with 2 inputs.
+    There are two layers, a hidden layer with 2 neurons and an output layer with 1 neuron.
+    """
    
     def __init___(self):
         # Adding the weights of the network
