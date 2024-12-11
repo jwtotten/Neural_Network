@@ -93,7 +93,35 @@ class Neural_network:
                 self.w2 -= learning_rate * dl_dypred * dypred_dh1 * dh1_dw2
                 self.b1 -= learning_rate * dl_dypred * dypred_dh1 * dh1_db1
 
-                
+                # Neuron h2
+                self.w3 -= learning_rate * dl_dypred * dypred_dh2 * dh2_dw3
+                self.w4 -= learning_rate * dl_dypred * dypred_dh2 * dh2_dw4
+                self.b2 -= learning_rate * dl_dypred * dypred_dh2 * dh2_db2
 
-                
-                                
+                # Neuron 01
+                self.w5 -= learning_rate * dl_dypred * dypred_dw5 
+                self.w6 -= learning_rate * dl_dypred * dypred_dw6 
+                self.b3 -= learning_rate * dl_dypred * dypred_db3
+
+            ### Calculate the total loss
+            if epoch % 10 == 0:
+                y_preds = np.apply_along_axis(self.feed_forward, 1, data)
+                loss = mse_loss(all_y_trues, y_preds)
+                print("Epoch %d loss: %.3f" % (epoch, loss))
+
+
+if __name__ == "__main__":
+
+    # Define the training dataset
+    data = np.array([[-2, -1], 
+    [25, 6],
+    [17, 4],
+    [-15, -6]])
+
+    # All true values
+    all_y_trues = np.array([1, 0, 0, 1])
+
+    # Train the network
+    network = Neural_network()
+    network.train(data=data, all_y_trues=all_y_trues)
+    
