@@ -64,3 +64,36 @@ class Neural_network:
                 o1 = sigmoid(sum_o1)
                 y_pred = o1
                 
+                ### Calculating the partial derivatives
+                dl_dypred = -2 * (y_true - y_pred)
+
+                # Neuron o1
+                dypred_dw5 = h1 * deriv_sigmoid(sum_o1)
+                dypred_dw6 = h2 * deriv_sigmoid(sum_o1)
+                dypred_db3 = deriv_sigmoid(sum_o1)
+
+                dypred_dh1 = self.w5 * deriv_sigmoid(sum_o1)
+                dypred_dh2 = self.w6 * deriv_sigmoid(sum_o1)
+
+
+                # Neuron h1
+                dh1_dw1 = x[0] * deriv_sigmoid(sum_h1)
+                dh1_dw2 = x[1] * deriv_sigmoid(sum_h1)
+                dh1_db1 = deriv_sigmoid(sum_h1)
+                
+                # Neuron h2
+                dh2_dw3 = x[0] * deriv_sigmoid(sum_h2)
+                dh2_dw4 = x[1] * deriv_sigmoid(sum_h2)
+                dh2_db2 = deriv_sigmoid(sum_h2)
+
+                ### Updating the weights and biases
+
+                # Neuron h1
+                self.w1 -= learning_rate * dl_dypred * dypred_dh1 * dh1_dw1
+                self.w2 -= learning_rate * dl_dypred * dypred_dh1 * dh1_dw2
+                self.b1 -= learning_rate * dl_dypred * dypred_dh1 * dh1_db1
+
+                
+
+                
+                                
