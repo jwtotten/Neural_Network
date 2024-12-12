@@ -1,4 +1,6 @@
 import numpy as np
+import matplotlib.pyplot as plt
+import os
 
 
 def sigmoid(x: float):
@@ -22,8 +24,7 @@ class Neural_network:
     neural network with 2 inputs.
     There are two layers, a hidden layer with 2 neurons and an output layer with 1 neuron.
     """
-   
-    def __init___(self):
+    def __init__(self):
         # Adding the weights of the network
         self.w1 = np.random.normal()
         self.w2 = np.random.normal()
@@ -51,6 +52,9 @@ class Neural_network:
         """
         learning_rate = 0.1
         epochs = 1000
+
+        self.epoch_intervals = []
+        self.loss_intervals = []
 
         for epoch in range(epochs):
             for x, y_true in zip(data, all_y_trues):
@@ -108,6 +112,33 @@ class Neural_network:
                 y_preds = np.apply_along_axis(self.feed_forward, 1, data)
                 loss = mse_loss(all_y_trues, y_preds)
                 print("Epoch %d loss: %.3f" % (epoch, loss))
+                self.epoch_intervals.append(epoch)
+                self.loss_intervals.append(loss)
+
+    def plot_loss_over_epoch(self, save_plot: bool = False):
+        """
+        Plotting how the calculated MSE varies over epoch. We should expect ths to decrease over time a the model is trained.
+        """
+        if len(self.epoch_intervals) != 0 and len(self.loss_intervals) != 0 and len(self.epoch_intervals) == len(self.loss_intervals):
+            plt.plot(self.epoch_intervals, self.loss_intervals)
+            plt.xlabel('Epoch')
+            plt.ylabel('Loss (MSE)')
+            plt.title('MSE Loss vs Epoch as model is trained.')
+            plt.grid()
+
+            if save_plot:
+                root_dir = os.path.dirname(os.path.realpath(__file__))
+                results_dir = root_dir + os.sep + 'Results'
+                if not os.path.exists(results_dir):
+                    os.mkdir(results_dir)
+                file_name = results_dir + os.sep + 'MSE_loss_vs_epoch.png'
+                plt.savefig(file_name)
+
+            plt.show()
+        else:
+            raise ValueError('self.epoch_intervals and self.loss_intervals are not of the same length.')
+        
+        
 
 
 if __name__ == "__main__":
@@ -124,4 +155,5 @@ if __name__ == "__main__":
     # Train the network
     network = Neural_network()
     network.train(data=data, all_y_trues=all_y_trues)
+    network.plot_loss_over_epoch(save_plot=True)
     
