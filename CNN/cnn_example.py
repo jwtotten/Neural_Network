@@ -29,6 +29,9 @@ class Convolution_layer_3x3:
     
     def forward(self, input_image):
         '''
+        Performs a forward pass of the convolution layer.
+        :param input_image: 2D numpy array
+        :type input_image: numpy.array
         '''
 
         height, width = input_image.shape
@@ -37,4 +40,7 @@ class Convolution_layer_3x3:
 
         for img_region, i, j in self.iterate_region(input_image):
             output[i, j] = np.sum(img_region * self.filters, axis=(1, 2))
+
+        return output
+
 
